@@ -1,0 +1,5 @@
+ofxXmlSettings
+ofxShader
+ofxVectorMath
+ofxThread
+ofxOpenCv
