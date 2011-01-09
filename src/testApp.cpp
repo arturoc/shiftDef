@@ -62,7 +62,7 @@ void testApp::setup(){
 	women_x_offset=0;
 
 
-	ofSoundStreamSetup(0,2,44100,1024,1);
+	ofSoundStreamSetup(0,2,this,44100,1024,1);
 
 	ofBackground(0,0,0);
 }
@@ -95,16 +95,16 @@ void testApp::update(){
 		x = ofMap(objectDepth,frontDepth,backDepth,front_x,back_x,true);
 		y = ofMap(objectDepth,frontDepth,backDepth,front_y,back_y,true);
 		z = ofMap(objectDepth,frontDepth,backDepth,front_z,back_z,true);
-		tilt = ofMap(objectDepth,frontDepth,backDepth,front_tilt,back_tilt,true);
-		color_renderer.pointBrightness = ofMap(objectDepth,frontDepth,backDepth,1,0,true);
-		bw_renderer.pointBrightness = ofMap(objectDepth,frontDepth,backDepth,0,1,true);
+		tilt = ofMap(objectDepth,frontDepth,backDepth,front_tilt,back_tilt,false);
+		color_renderer.pointBrightness = ofxTween::map(objectDepth,frontDepth,backDepth,0,1,true,easing);
+		bw_renderer.pointBrightness = ofxTween::map(objectDepth,frontDepth,backDepth,1,0,true,easing);
 
 		color_renderer.soundDepthFactor = bw_renderer.soundDepthFactor =sound_depth;
 		color_renderer.focusDistance = bw_renderer.focusDistance =focus;
 		color_renderer.aperture = bw_renderer.aperture =aperture;
 		color_renderer.pointSizeFactor = bw_renderer.pointSizeFactor =pfactor;
-		color_renderer.oneInX = bw_renderer.oneInX =one_in;
-		color_renderer.oneInY = bw_renderer.oneInY =one_in;
+		color_renderer.oneInX = bw_renderer.oneInX =round(one_in);
+		color_renderer.oneInY = bw_renderer.oneInY =round(one_in);
 
 		if(tilt!=prevTilt){
 			kinect.setCameraTiltAngle(tilt);
@@ -132,17 +132,18 @@ void testApp::drawSound(){
 		ofNoFill();
 		ofSetColor(255,255,255,255);
 
-		ofTranslate(0,0,-z);
+		ofPoint centroid = bw_renderer.get3dCentroid();
 
-		ofTranslate(0,0,-objectDepth);
+		ofTranslate(centroid.x,centroid.y,-objectDepth);
 		ofRotate(rot_y,0,1,0);
 
 		/*if(controlsWindow->doCameraEasing){
 			cameraEasing.rotate();
 		}*/
 
-		ofTranslate(0,0,objectDepth);
+		ofTranslate(-centroid.x,-centroid.y,objectDepth);
 
+		ofTranslate(0,0,-z);
 		/*if(controlsWindow->doCameraEasing){
 			cameraEasing.translate();
 		}*/

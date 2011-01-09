@@ -31,7 +31,8 @@ public:
 	void fensterWindowResized(int w, int h);
 
 
-	ofxWFrame gui,gui_sound,gui_women;
+	ofxWFrame gui,gui_women;
+	ofxWFrame gui_sound;
 
 private:
 	testApp * app;

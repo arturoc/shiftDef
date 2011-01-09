@@ -31,6 +31,7 @@ public:
 	void audioReceived( float * input, int bufferSize, int nChannels );
 
 	float getObjectDepth();
+	ofPoint get3dCentroid();
 
 
 	float 				nearThreshold;

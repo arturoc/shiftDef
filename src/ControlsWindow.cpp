@@ -25,6 +25,18 @@ void ControlsWindow::fensterSetup(){
 	ofAddListener(gui.addGroupedToggle("play sound",&(app->playingSound),"MAIN").boolEvent,app,&testApp::activateSound);
 	ofAddListener(gui.addGroupedToggle("play dresses",&(app->playingDresses),"MAIN").boolEvent,app,&testApp::playDresses);
 
+	gui_women.init("women");
+	gui_women.addSpinSlider("y",&app->women_y,0,1000);
+	gui_women.addSpinSlider("w",&app->women_w,400,512);
+	gui_women.addSpinSlider("x offset",&app->women_x_offset,-50,50);
+	gui_women.addLoadButton("settings_W.xml","settings");
+	gui_women.addSaveButton("settings_W.xml","settings");
+
+	gui_women.loadFrom("settings_W.xml","settings");
+
+
+
+
 	gui_sound.init("sound");
 	gui_sound.addSpinSlider("front s. depth",&app->front_sound_depth,20,150);
 	gui_sound.addSpinSlider("front focus",&app->front_focus,100,500);
@@ -51,19 +63,18 @@ void ControlsWindow::fensterSetup(){
 	gui_sound.addSpinSlider("back tilt",&app->back_tilt,0,12);
 	gui_sound.addSpinSlider("back depth",&app->backDepth,200,1000);
 
+
+
+	gui_sound.addSpinSlider("rot y",&app->rot_y,-360,360);
+
 	gui_sound.addLoadButton("settings.xml","settings");
 	gui_sound.addSaveButton("settings.xml","settings");
 
 	gui_sound.loadFrom("settings.xml","settings");
 
-	gui_women.init("women");
-	gui_women.addSpinSlider("y",&app->women_y,0,1000);
-	gui_women.addSpinSlider("w",&app->women_w,400,512);
-	gui_women.addSpinSlider("x offset",&app->women_x_offset,-50,50);
-	gui_women.addLoadButton("settings_W.xml","settings");
-	gui_women.addSaveButton("settings_W.xml","settings");
+	gui_sound.disable();
+	gui_sound.setVisible(false);
 
-	gui_women.loadFrom("settings_W.xml","settings");
 }
 
 void ControlsWindow::fensterUpdate(){

@@ -398,3 +398,9 @@ void SCRenderer::audioReceived( float * input, int bufferSize, int nChannels ){
 	}
 	mutex.unlock();
 }
+
+ofPoint SCRenderer::get3dCentroid(){
+	if(contourFinder.blobs.size()==0) return ofPoint(0,0,0);
+	ofxCvBlob & blob = contourFinder.blobs[0];
+	return ofPoint(blob.centroid.x,blob.centroid.y,objectDepth);
+}
